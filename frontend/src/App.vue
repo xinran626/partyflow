@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import logo from '@/assets/logo.svg'
@@ -23,6 +23,15 @@ function handleLogout() {
   authStore.logout()
   router.push('/login')
 }
+
+onMounted(() => {
+  if (authStore.token && !authStore.user) {
+    authStore.fetchMe().catch(() => {
+      authStore.logout()
+      router.push('/login')
+    })
+  }
+})
 </script>
 
 <template>

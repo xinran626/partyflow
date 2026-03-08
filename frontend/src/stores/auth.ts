@@ -1,6 +1,12 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { LoginPayload, RegisterPayload, User } from '@/types/auth'
+import { apiRequest } from '@/api/client'
+import type {
+  AuthResponse,
+  LoginPayload,
+  RegisterPayload,
+  User,
+} from '@/types/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   const user = ref<User | null>(null)
@@ -20,35 +26,32 @@ export const useAuthStore = defineStore('auth', () => {
     localStorage.removeItem('token')
   }
 
-  async function login(payload: LoginPayload) {
-    // 这里先用 mock，后面再替换成真实 API
-    if (!payload.email || !payload.password) {
-      throw new Error('Email and password are required.')
-    }
+  async function register(payload: RegisterPayload) {
+    const data = await apiRequest<AuthResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
 
-    const mockUser: User = {
-      id: 1,
-      name: 'Eliza',
-      email: payload.email,
-      systemRole: 'user',
-    }
-
-    setAuth('mock-token', mockUser)
+    setAuth(data.token, data.user)
   }
 
-  async function register(payload: RegisterPayload) {
-    if (!payload.name || !payload.email || !payload.password) {
-      throw new Error('All fields are required.')
-    }
+  async function login(payload: LoginPayload) {
+    const data = await apiRequest<AuthResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
 
-    const mockUser: User = {
-      id: 1,
-      name: payload.name,
-      email: payload.email,
-      systemRole: 'user',
-    }
+    setAuth(data.token, data.user)
+  }
 
-    setAuth('mock-token', mockUser)
+  async function fetchMe() {
+    if (!token.value) return
+
+    const data = await apiRequest<{ user: User }>('/auth/me', {
+      method: 'GET',
+    })
+
+    user.value = data.user
   }
 
   return {
@@ -57,6 +60,7 @@ export const useAuthStore = defineStore('auth', () => {
     isAuthenticated,
     login,
     register,
+    fetchMe,
     logout,
   }
 })
