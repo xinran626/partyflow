@@ -1,29 +1,40 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router'
+import { computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+import logo from '@/assets/logo.svg'
 import {
   Calendar,
   DataAnalysis,
   Document,
   House,
+  SwitchButton,
 } from '@element-plus/icons-vue'
-import logo from '@/assets/logo.svg'
 
 const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
+
+const isAuthPage = computed(() => {
+  return route.path === '/login' || route.path === '/register'
+})
+
+function handleLogout() {
+  authStore.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
-  <el-container class="layout-container">
+  <router-view v-if="isAuthPage" />
+
+  <el-container v-else class="layout-container">
     <el-aside width="220px" class="sidebar">
       <div class="logo">
-        <img :src="logo" alt="PartyFlow logo" />
-        
+        <img :src="logo" alt="PartyFlow logo" class="logo-image" />
       </div>
 
-      <el-menu
-        router
-        :default-active="route.path"
-        class="menu"
-      >
+      <el-menu router :default-active="route.path" class="menu">
         <el-menu-item index="/dashboard">
           <el-icon><House /></el-icon>
           <span>Dashboard</span>
@@ -47,7 +58,19 @@ const route = useRoute()
     </el-aside>
 
     <el-container>
-      <el-header class="header">PartyFlow Admin</el-header>
+      <el-header class="header">
+        <span>PartyFlow Admin</span>
+
+        <div class="header-right">
+          <span v-if="authStore.user">{{ authStore.user.name }}</span>
+
+          <el-button text @click="handleLogout">
+            <el-icon><SwitchButton /></el-icon>
+            Logout
+          </el-button>
+        </div>
+      </el-header>
+
       <el-main class="main">
         <router-view />
       </el-main>
@@ -66,13 +89,19 @@ const route = useRoute()
 }
 
 .logo {
-  height: 72px;
+  height: 76px;
   display: flex;
   align-items: center;
   padding: 16px 20px;
   box-sizing: border-box;
+  border-bottom: 1px solid #eaeaea;
 }
 
+.logo-image {
+  height: 38px;
+  width: auto;
+  display: block;
+}
 
 .menu {
   border-right: none;
@@ -81,10 +110,19 @@ const route = useRoute()
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-size: 18px;
   font-weight: 600;
   border-bottom: 1px solid #eaeaea;
   background: #fff;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .main {
