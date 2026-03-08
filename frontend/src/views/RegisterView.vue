@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import logo from '@/assets/logo.svg'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -44,59 +45,77 @@ async function handleRegister() {
 
 <template>
   <div class="auth-page">
-    <el-card class="auth-card">
-      <h1 class="auth-title">Register</h1>
+    <div class="auth-container">
+      <div class="brand">
+        <img :src="logo" class="logo" />
+        <p>Event planning platform</p>
+      </div>
 
-      <el-form @submit.prevent="handleRegister">
-        <el-form-item label="Name">
-          <el-input v-model="form.name" placeholder="Enter your name" />
-        </el-form-item>
+      <el-card class="auth-card">
+        <h2 class="title">Create account</h2>
 
-        <el-form-item label="Email">
-          <el-input v-model="form.email" placeholder="Enter your email" />
-        </el-form-item>
+        <el-form @submit.prevent="handleRegister">
+          <el-form-item>
+            <el-input
+              v-model="form.name"
+              placeholder="Name"
+              size="large"
+            />
+          </el-form-item>
 
-        <el-form-item label="Password">
-          <el-input
-            v-model="form.password"
-            type="password"
-            placeholder="Create a password"
-            show-password
+          <el-form-item>
+            <el-input
+              v-model="form.email"
+              placeholder="Email"
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item>
+            <el-input
+              v-model="form.password"
+              type="password"
+              placeholder="Password"
+              show-password
+              size="large"
+            />
+          </el-form-item>
+
+          <el-form-item>
+            <el-input
+              v-model="form.confirmPassword"
+              type="password"
+              placeholder="Confirm password"
+              show-password
+              size="large"
+            />
+          </el-form-item>
+
+          <el-alert
+            v-if="errorMessage"
+            :title="errorMessage"
+            type="error"
+            show-icon
+            class="error"
           />
-        </el-form-item>
 
-        <el-form-item label="Confirm Password">
-          <el-input
-            v-model="form.confirmPassword"
-            type="password"
-            placeholder="Confirm your password"
-            show-password
-          />
-        </el-form-item>
+          <el-button
+            type="primary"
+            size="large"
+            :loading="loading"
+            class="register-button"
+            @click="handleRegister"
+          >
+            Register
+          </el-button>
+        </el-form>
 
-        <el-alert
-          v-if="errorMessage"
-          :title="errorMessage"
-          type="error"
-          show-icon
-          class="mb-16"
-        />
-
-        <el-button
-          type="primary"
-          :loading="loading"
-          class="full-width"
-          @click="handleRegister"
-        >
-          Register
-        </el-button>
-
-        <div class="auth-footer">
+        <div class="footer">
           Already have an account?
           <router-link to="/login">Login</router-link>
         </div>
-      </el-form>
-    </el-card>
+      </el-card>
+    </div>
   </div>
 </template>
 
@@ -104,31 +123,107 @@ async function handleRegister() {
 .auth-page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  background: #f7f8fa;
+  align-items: center;
+
+  background: linear-gradient(
+    135deg,
+    #e4eaff 0%,
+    rgb(248, 251, 209) 40%,
+    #fbd9df 100%
+  );
+}
+
+.auth-container {
+  width: 420px;
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 24px;
+  margin-top: 0px;
+}
+
+.logo {
+  height: 68px;
+}
+
+.brand h1 {
+  margin: 8px 0 4px;
+  font-size: 26px;
+}
+
+.brand p {
+  color: #888;
+  font-size: 14px;
+  margin-top: 0px;
 }
 
 .auth-card {
-  width: 420px;
-  padding: 12px;
+  padding: 28px;
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(14px);
+
+  border: 1px solid rgba(255, 255, 255, 0.5);
+
+  box-shadow:
+    0 15px 35px rgba(0, 0, 0, 0.15),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.25s ease;
 }
 
-.auth-title {
-  margin-bottom: 24px;
+.auth-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.18),
+    0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.title {
   text-align: center;
+  margin-bottom: 20px;
+  margin-top: 0px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 34px;
+  letter-spacing: 0.5px;
 }
 
-.full-width {
+.register-button {
   width: 100%;
+  border-radius: 10px;
+
+  background: linear-gradient(135deg, #4f8bd6, #5aa4ff);
+
+  border: none;
+
+  transition: all 0.2s ease;
 }
 
-.auth-footer {
-  margin-top: 16px;
+.register-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(79, 139, 214, 0.35);
+}
+
+.footer {
+  margin-top: 18px;
   text-align: center;
+  font-size: 14px;
 }
 
-.mb-16 {
-  margin-bottom: 16px;
+.error {
+  margin-bottom: 12px;
+}
+
+:deep(.el-input__wrapper) {
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+:deep(.el-input__wrapper.is-focus) {
+  box-shadow: 0 0 0 2px rgba(79, 139, 214, 0.25);
 }
 </style>
