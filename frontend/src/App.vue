@@ -1,23 +1,30 @@
 <script setup lang="ts">
+import { useRoute } from 'vue-router'
 import {
   Calendar,
   DataAnalysis,
   Document,
   House,
 } from '@element-plus/icons-vue'
+import logo from '@/assets/logo.svg'
+
+const route = useRoute()
 </script>
 
 <template>
   <el-container class="layout-container">
     <el-aside width="220px" class="sidebar">
-      <div class="logo">PartyFlow</div>
+      <div class="logo">
+        <img :src="logo" alt="PartyFlow logo" />
+        
+      </div>
 
       <el-menu
         router
-        :default-active="$route.path"
+        :default-active="route.path"
         class="menu"
       >
-        <el-menu-item index="/">
+        <el-menu-item index="/dashboard">
           <el-icon><House /></el-icon>
           <span>Dashboard</span>
         </el-menu-item>
@@ -59,14 +66,13 @@ import {
 }
 
 .logo {
-  height: 60px;
+  height: 72px;
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  font-size: 20px;
-  font-weight: 700;
-  border-bottom: 1px solid #eaeaea;
+  padding: 16px 20px;
+  box-sizing: border-box;
 }
+
 
 .menu {
   border-right: none;

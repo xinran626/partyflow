@@ -1,0 +1,43 @@
+<svg width="190" height="52" viewBox="0 0 190 52" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="pfGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff5f9e"/>
+      <stop offset="50%" stop-color="#ff8a5b"/>
+      <stop offset="100%" stop-color="#ffb703"/>
+    </linearGradient>
+  </defs>
+
+  <!-- icon -->
+  <g transform="translate(2,6)">
+    <rect x="0" y="0" width="40" height="40" rx="12" fill="url(#pfGrad2)"/>
+
+   
+
+    <!-- party hat -->
+    <polygon points="20,10 12.5,28 27.5,28" fill="#ffffff"/>
+    <path d="M15 28 Q20 31 25 28" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"/>
+
+    <!-- pom pom -->
+    <circle cx="20" cy="9" r="2.3" fill="#ffffff"/>
+  </g>
+
+  <!-- text -->
+  <text x="54" y="31"
+        font-family="Inter, Poppins, Arial, sans-serif"
+        font-size="23"
+        font-weight="700"
+        fill="#1f2937"
+        letter-spacing="0.2">
+    PartyFlow
+  </text>
+
+  <!-- subtitle accent -->
+  <text x="56" y="43"
+        font-family="Inter, Arial, sans-serif"
+        font-size="8.5"
+        font-weight="600"
+        fill="#9ca3af"
+        letter-spacing="1.6">
+    EVENT OPS
+  </text>
+</svg>
