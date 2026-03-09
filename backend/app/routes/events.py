@@ -71,3 +71,70 @@ def create_event():
         "message": "Event created successfully.",
         "event": event.to_dict(),
     }, 201
+
+
+@events_bp.put("/<int:event_id>")
+def update_event(event_id):
+    current_user = get_current_user()
+
+    if not current_user:
+        return {"message": "Unauthorized."}, 401
+
+    event = Event.query.get(event_id)
+    if not event:
+        return {"message": "Event not found."}, 404
+
+    leader_membership = EventMember.query.filter_by(
+        event_id=event.id,
+        user_id=current_user.id,
+        role="team_leader",
+    ).first()
+
+    if not leader_membership:
+        return {"message": "Forbidden."}, 403
+
+    data = request.get_json(silent=True) or {}
+
+    name = data.get("name", "").strip()
+    date = data.get("date", "")
+    location = data.get("location", "")
+
+    if not name:
+        return {"message": "Event name is required."}, 400
+
+    event.name = name
+    event.date = date or None
+    event.location = location or None
+
+    db.session.commit()
+
+    return {
+        "message": "Event updated successfully.",
+        "event": event.to_dict(),
+    }, 200
+
+
+@events_bp.delete("/<int:event_id>")
+def delete_event(event_id):
+    current_user = get_current_user()
+
+    if not current_user:
+        return {"message": "Unauthorized."}, 401
+
+    event = Event.query.get(event_id)
+    if not event:
+        return {"message": "Event not found."}, 404
+
+    leader_membership = EventMember.query.filter_by(
+        event_id=event.id,
+        user_id=current_user.id,
+        role="team_leader",
+    ).first()
+
+    if not leader_membership:
+        return {"message": "Forbidden."}, 403
+
+    db.session.delete(event)
+    db.session.commit()
+
+    return {"message": "Event deleted successfully."}, 200

@@ -26,5 +26,5 @@ class Event(db.Model):
             "date": self.date,
             "location": self.location,
             "createdBy": self.created_by,
-            "createdAt": self.created_at.isoformat(),
+            "createdAt": self.created_at.isoformat() + "Z",
         }
