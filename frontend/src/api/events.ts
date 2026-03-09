@@ -13,3 +13,19 @@ export async function createEvent(payload: CreateEventPayload) {
     body: JSON.stringify(payload),
   })
 }
+
+export async function updateEvent(
+  id: number,
+  payload: Partial<CreateEventPayload>
+) {
+  return apiRequest<{ message: string; event?: Event }>(`/events/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(payload),
+  })
+}
+
+export async function deleteEvent(id: number) {
+  return apiRequest<{ message: string }>(`/events/${id}`, {
+    method: 'DELETE',
+  })
+}
