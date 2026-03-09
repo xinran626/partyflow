@@ -181,20 +181,20 @@ async function handleLogin() {
 
   background: linear-gradient(
     135deg,
-    #4f8bd6,
-    #5aa4ff
+    #ff7a1a,
+    #ffb347
   );
 
   border: none;
+  color: white;
 
   transition: all 0.2s ease;
 }
 
 .login-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(79,139,214,0.35);
+  box-shadow: 0 6px 14px rgba(255,122,26,0.35);
 }
-
 .footer {
   margin-top: 18px;
   text-align: center;

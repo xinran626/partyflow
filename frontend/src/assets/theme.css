@@ -1,0 +1,42 @@
+:root {
+
+    /* 主色（按钮） */
+    --el-color-primary: #ff7a1a;
+  
+    /* hover */
+    --el-color-primary-light-3: #ff9340;
+  
+    /* active */
+    --el-color-primary-dark-2: #e96300;
+  
+    /* 按钮文字 */
+    --el-button-text-color: #ffffff;
+  
+  }
+  
+  /* 按钮圆一点更好看 */
+  .el-button {
+    border-radius: 10px;
+    font-weight: 500;
+  }
+  
+  /* primary 按钮阴影 */
+  .el-button--primary {
+    box-shadow: 0 4px 10px rgba(255,122,26,0.25);
+  }
+  
+  /* hover 动效 */
+  .el-button--primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(255,122,26,0.35);
+  }
+  
+  /* dialog 圆角 */
+  .el-dialog {
+    border-radius: 16px;
+  }
+  
+  /* table 更干净 */
+  .el-table {
+    border-radius: 12px;
+  }

@@ -196,16 +196,18 @@ async function handleRegister() {
   width: 100%;
   border-radius: 10px;
 
-  background: linear-gradient(135deg, #4f8bd6, #5aa4ff);
+  background: linear-gradient(135deg, #ff7a1a, #ffb347);
 
   border: none;
+  color: white;
+  font-weight: 500;
 
   transition: all 0.2s ease;
 }
 
 .register-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 14px rgba(79, 139, 214, 0.35);
+  box-shadow: 0 6px 14px rgba(255, 122, 26, 0.35);
 }
 
 .footer {

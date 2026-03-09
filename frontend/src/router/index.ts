@@ -40,6 +40,17 @@ const router = createRouter({
       meta: { requiresAuth: true },
     },
     {
+      path: '/invitations',
+      name: 'invitations',
+      component: () => import('../views/InvitationsView.vue'),
+    },
+    
+    {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('../views/SettingsView.vue'),
+    },
+    {
       path: '/finance',
       name: 'finance',
       component: FinanceView,

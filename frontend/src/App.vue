@@ -4,11 +4,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import logo from '@/assets/logo.svg'
 import {
-  Calendar,
-  DataAnalysis,
-  Document,
   House,
-  SwitchButton,
+  Calendar,
+  Message,
+  Setting,
+  SwitchButton
 } from '@element-plus/icons-vue'
 
 const route = useRoute()
@@ -38,7 +38,7 @@ onMounted(() => {
   <router-view v-if="isAuthPage" />
 
   <el-container v-else class="layout-container">
-    <el-aside width="220px" class="sidebar">
+    <el-aside width="210px" class="sidebar">
       <div class="logo">
         <img :src="logo" alt="PartyFlow logo" class="logo-image" />
       </div>
@@ -54,14 +54,14 @@ onMounted(() => {
           <span>Events</span>
         </el-menu-item>
 
-        <el-menu-item index="/finance">
-          <el-icon><Document /></el-icon>
-          <span>Finance</span>
+        <el-menu-item index="/invitations">
+          <el-icon><Message /></el-icon>
+          <span>Invitations</span>
         </el-menu-item>
 
-        <el-menu-item index="/reports">
-          <el-icon><DataAnalysis /></el-icon>
-          <span>Reports</span>
+        <el-menu-item index="/settings">
+          <el-icon><Setting /></el-icon>
+          <span>Settings</span>
         </el-menu-item>
       </el-menu>
     </el-aside>
@@ -90,40 +90,70 @@ onMounted(() => {
 <style scoped>
 .layout-container {
   height: 100vh;
+  background: #f6f7fb;
 }
 
 .sidebar {
   background: #ffffff;
-  border-right: 1px solid #eaeaea;
+  border-right: 1px solid #eceef5;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.01);
 }
 
 .logo {
-  height: 76px;
+  height: 63px;
   display: flex;
   align-items: center;
-  padding: 16px 20px;
-  box-sizing: border-box;
-  border-bottom: 1px solid #eaeaea;
+  justify-content: center;
+  border-bottom: 1px solid #f1f3f8;
 }
 
-.logo-image {
-  height: 38px;
-  width: auto;
-  display: block;
+.logo img {
+  height: 48px;
 }
 
 .menu {
   border-right: none;
+  padding: 14px 12px;
+}
+
+:deep(.el-menu) {
+  border-right: none;
+}
+
+:deep(.el-menu-item) {
+  height: 44px;
+  line-height: 44px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+}
+
+:deep(.el-menu-item:hover) {
+  background: #fff4eb;
+  color: #ff7a1a;
+}
+
+:deep(.el-menu-item.is-active) {
+  background: #fff1e6;
+  color: #ff7a1a;
+}
+
+:deep(.el-menu-item .el-icon) {
+  margin-right: 10px;
 }
 
 .header {
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 18px;
-  font-weight: 600;
-  border-bottom: 1px solid #eaeaea;
-  background: #fff;
+  padding: 0 24px;
+  font-size: 22px;
+  font-weight: 700;
+  border-bottom: 1px solid #eceef5;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
 }
 
 .header-right {
@@ -134,7 +164,16 @@ onMounted(() => {
   font-weight: 500;
 }
 
+.user-chip {
+  padding: 6px 12px;
+  background: #f8fafc;
+  border: 1px solid #eceef5;
+  border-radius: 999px;
+  color: #374151;
+}
+
 .main {
-  background: #f7f8fa;
+  background: #f6f7fb;
+  padding: 24px;
 }
 </style>
